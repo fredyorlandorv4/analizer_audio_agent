@@ -146,6 +146,7 @@ def list_audios(current_user=Depends(get_current_user), db: Session = Depends(ge
             size_bytes=i.size_bytes,
             created_at=i.created_at,
             download_url=f"/audios/{i.id}/file",
+            extra=i.extra
         )
         for i in items
     ]
@@ -162,6 +163,7 @@ def get_audio(audio_id: int,current_user=Depends(get_current_user), db: Session 
         size_bytes=a.size_bytes,
         created_at=a.created_at,
         download_url=f"/audios/{a.id}/file",
+        extra=a.extra
     )
 
 @router.get("/{audio_id}/file")
