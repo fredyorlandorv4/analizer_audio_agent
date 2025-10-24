@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import Base, engine
 from .routes import auth, audios
+from .routes import audios, users, roles, areas
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +19,9 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(audios.router)
+app.include_router(users.router)
+app.include_router(roles.router)
+app.include_router(areas.router)
 
 @app.get("/")
 def root():

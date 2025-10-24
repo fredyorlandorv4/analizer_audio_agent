@@ -110,3 +110,14 @@ def get_current_user(
         return user
     except JWTError:
         raise HTTPException(401, "Token inválido")
+    
+
+# def get_current_user_from_token(...)-> User: ...
+
+def require_role(*allowed: str):
+    def _dep(current_user: User = Depends(get_current_user)) -> User:
+        r = current_user.role.name if current_user.role else None
+        if not r or r not in allowed:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Permisos insuficientes")
+        return current_user
+    return _dep
